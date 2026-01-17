@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Holy Communion Gallery</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 40px;
+    }
+
+    /* Upload box (admin only) */
+    #uploadBox {
+      display: none;
+      margin: 30px auto;
+    }
+
+    #uploadBox label {
+      background: #000;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .photo-box {
+      width: 280px;
+      height: 200px;
+      border: 1px solid #ccc;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-box img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .back {
+      margin: 40px 0;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Holy Communion Photography</h1>
+
+  <!-- ✅ ADMIN UPLOAD OPTION (OUTSIDE PHOTOS) -->
+  <div id="uploadBox">
+    <label for="fileInput">📤 Upload Photos</label>
+    <input
+      type="file"
+      id="fileInput"
+      accept="image/*"
+      multiple
+      style="display:none"
+      onchange="handleUpload(event)"
+    >
+  </div>
+
+  <!-- ✅ PHOTO GALLERY (UI NOT CHANGED) -->
+  <div class="gallery" id="gallery">
+    <div class="photo-box"></div>
+    <div class="photo-box"></div>
+    <div class="photo-box"></div>
+  </div>
+
+  <div class="back">
+    <a href="home.html">← Back to Home</a>
+  </div>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    // ADMIN EMAIL
+    const ADMIN_EMAIL = "sitharasanthosh273@gmail.com";
+
+    // Get logged-in email
+    const userEmail = localStorage.getItem("userEmail");
+
+    // Show upload only for admin
+    if (userEmail === ADMIN_EMAIL) {
+      document.getElementById("uploadBox").style.display = "block";
+    }
+
+    // Handle image upload (preview only)
+    function handleUpload(event) {
+      const files = event.target.files;
+      const gallery = document.getElementById("gallery");
+
+      for (let i = 0; i < files.length; i++) {
+        const box = document.createElement("div");
+        box.className = "photo-box";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(files[i]);
+
+        box.appendChild(img);
+        gallery.appendChild(box);
+      }
+    }
+  </script>
+
+</body>
+</html>
